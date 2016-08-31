@@ -44,7 +44,10 @@ var cpuInterval = setInterval(function(){
 	console.log('freemem : '+fm);
 	console.log('totalmem : '+tm);
 	old = current;
-	socket.emit('usage',perc);
+	socket.emit('usage',JSON.stringify({
+		"CPU" : perc,
+		"memory" : musage
+	}));
 },interval);
 
 
