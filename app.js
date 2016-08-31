@@ -1,5 +1,11 @@
 var os = require("os");
 var _ = require('underscore');
+var socket = require('socket.io-client')('http://123.254.243.77:3001');
+
+
+socket.on('connect', function(){
+	console.log('s-c connection complete');
+});
 
 old = _.map(os.cpus(),function(cpu){ return cpu.times});
 
@@ -38,4 +44,7 @@ var cpuInterval = setInterval(function(){
 	console.log('freemem : '+fm);
 	console.log('totalmem : '+tm);
 	old = current;
+	socket.emit('usage',perc);
 },interval);
+
+
