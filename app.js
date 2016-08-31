@@ -3,8 +3,9 @@ var _ = require('underscore');
 var socket = require('socket.io-client')('http://123.254.243.77:3001');
 
 
-socket.on('connect', function(){
-	console.log('s-c connection complete');
+socket.on('connect', function(data){
+
+	console.log(data);
 });
 
 old = _.map(os.cpus(),function(cpu){ return cpu.times});
