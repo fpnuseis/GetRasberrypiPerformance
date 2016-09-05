@@ -2,15 +2,10 @@ var os = require("os");
 var _ = require('underscore');
 var socket = require('socket.io-client')('http://123.254.243.77:3001');
 
-var readline = require('readline');
-
-var r = readline.createInterface({
-	input:process.stdin,
-	output:process.stdout
-});
-
-r.question("ID: ", function(ID) {
-  r.question("PW: ", function(PW) {
+var read = require('read')
+read({ prompt: 'ID: '}, function(er, ID) {
+  read({ prompt: 'Password: ', silent: true }, function(er, PW) {
+    console.log('Your password is: %s', PW)
     socket.emit('checkID',JSON.stringify({
       "ID" : ID,
       "PW" : PW
@@ -18,7 +13,7 @@ r.question("ID: ", function(ID) {
     socket.on('loginState',function (data) {
       console.log(data);
     });
-    r.close(); // 반드시 close()를 해줘야 합니다.
+
   });
 });
 
