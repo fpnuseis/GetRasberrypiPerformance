@@ -34,6 +34,26 @@ function getTotal(cpus){
 	return {'total':total,'idle':tidle};
 };
 
+var ps = require('ps-node');
+var usage = require('usage');
+
+ps.lookup({
+    psargs: '-ec'
+    }, function(err, resultList ) {
+    if (err) {
+        throw new Error( err );
+    }
+    resultList.forEach(function( process ){
+        if( process ){
+            usage.lookup(process.pid, function(err, result) {
+                console.log(process.pid);
+                console.log(process.command)
+                console.log(result);
+            });
+        }
+    });
+});
+
 var cpuInterval = setInterval(function(){
 	var current = _.map(os.cpus(),function(cpu){ return cpu.times;});
 	var oinfo = getTotal(old);
